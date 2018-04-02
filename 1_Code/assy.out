@@ -1,0 +1,101 @@
+!Data snipit: Renesas SH7058 SH-2E
+
+unk_105C3:       .byte 0x64         ! DATA XREF: FUNC_UNK2:off_4B720o
+.byte 0x64
+.byte 0x63
+.byte 0x63
+.byte 0x62
+.byte 0x61
+.byte 0x60
+.byte 0x58
+.byte 0x44
+.byte 0x42
+.byte 0x42
+.byte 0x42
+.byte 0x42
+.byte 0x42
+.byte 0x42
+.byte 0x41
+.byte 0x40
+.byte 0x40
+.byte 0x40
+.byte 0x40
+.byte 0x3F
+
+!Function to decode:
+FUNC_UNK1:      ! CODE XREF: FUNC_UNK2_00440+36p
+mov.w   word_2978E, r0
+extu.b  r5, r5
+cmp/hs  r0, r5
+bt      loc_2978A
+mov     r5, r3
+shlr2   r5
+shlr2   r5
+not     r0, r1
+
+and     r1, r3
+shll8   r3
+shll2   r3
+shll2   r3
+add     r5, r4
+mov.b   @(0,r4), r1
+mov.b   @(1,r4), r0
+extu.b  r1, r1
+extu.b  r0, r0
+cmp/hs  r1, r0
+bt      loc_2977A
+mov     r1, r7
+sub     r0, r1
+sts     macl, r6
+mul.l   r3, r1
+sts     macl, r1
+lds     r6, macl
+mov     r7, r0
+shlr16  r1
+rts
+sub     r1, r0
+
+! ---------------------------------------------------------------------------
+loc_2977A:              
+sub     r1, r0
+sts     macl, r6
+mul.l   r3, r0
+sts     macl, r0
+lds     r6, macl
+shlr16  r0
+rts
+add     r1, r0          
+! ---------------------------------------------------------------------------
+
+loc_2978A:         
+rts
+mov.b   @(0xF,r4), r0
+! End of function FUNC_UNK1
+! ---------------------------------------------------------------------------
+word_2978E:     .word 0xF0             
+
+!Call of Function to decode:
+...
+         mov.l   off_4AF68, r8
+mov.l   off_4B718, r1
+add     #0x7F, r2
+mov.l   #off_4B71C, r4
+add     #1, r2
+mov.b   @(2,r1), r0
+mov.w   r2, @(0,r4)  
+mov.l   off_4B720, r4
+mov.l   off_4B724, r10
+mov.b   r12, @(0,r8)
+jsr     @r10
+extu.b  r0, r5
+mov.b   @(0,r8), r14
+extu.b  r0, r0
+extu.b  r14, r12
+mul.l   r0, r12
+...
+! ---------------------------------------------------------------------------
+off_4AF68:      .long byte_FFFE8FE2
+off_4B718:      .long byte_FFFE933A
+off_4B71C:      .long unk_FFFE87D8
+off_4B720:      .long unk_105C3
+off_4B724:      .long FUNC_UNK1
